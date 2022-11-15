@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SetupCardGameState : CardGameState
 {
+    [SerializeField] PieceManager _pieceManager = null;
 
     bool _activated = false;
 
@@ -25,5 +26,6 @@ public class SetupCardGameState : CardGameState
     public override void Exit()
     {
         Debug.Log("Setup: Exiting...");
+        _pieceManager.Setup();
     }
 }
