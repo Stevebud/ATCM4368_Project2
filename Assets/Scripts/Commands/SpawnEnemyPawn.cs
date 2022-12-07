@@ -2,24 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnPawnCommand : ICommand
+public class SpawnEnemyPawn : ICommand
 {
     BoardSpawner _boardSpawner;
 
-    public SpawnPawnCommand(BoardSpawner boardSpawner)
+    public SpawnEnemyPawn(BoardSpawner boardSpawner)
     {
         _boardSpawner = boardSpawner;
     }
 
     public void Execute()
     {
-        _boardSpawner.SpawnPiece(true, true);
+        _boardSpawner.SpawnPiece(false, true);
     }
 
     public void Undo()
     {
-        //_boardSpawner.RemovePawn(_spawnedPawn);
+
     }
-
-
 }

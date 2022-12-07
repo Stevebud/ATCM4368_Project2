@@ -31,6 +31,7 @@ public class MainMenuState : CardGameState
     public void OnStartGameClicked()
     {
         StateMachine.ChangeState<SetupCardGameState>();
+        StateMachine.Input.PlayClip2D();
     }
 
     public void OnExitClicked()

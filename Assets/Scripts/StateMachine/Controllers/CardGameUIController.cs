@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class CardGameUIController : MonoBehaviour
 {
+    [SerializeField] CanvasRenderer _playerBettingPanel = null;
     [SerializeField] CanvasRenderer _enemyBettingPanel = null;
     [SerializeField] CanvasRenderer _victoryPanel = null;
     [SerializeField] CanvasRenderer _lossPanel = null;
@@ -14,6 +15,8 @@ public class CardGameUIController : MonoBehaviour
 
     private void OnEnable()
     {
+        PlayerTurnCardGameState.PlayerBettingTurnBegan += OnPlayerBettingTurnBegan;
+        PlayerTurnCardGameState.PlayerBettingTurnEnded += OnPlayerBettingTurnEnded;
         EnemyTurnCardGameState.EnemyTurnBegan += OnEnemyTurnBegan;
         EnemyTurnCardGameState.EnemyTurnEnded += OnEnemyTurnEnded;
         WinState.WinStateStart += OnWinStart;
@@ -30,6 +33,8 @@ public class CardGameUIController : MonoBehaviour
 
     private void OnDisable()
     {
+        PlayerTurnCardGameState.PlayerBettingTurnBegan -= OnPlayerBettingTurnBegan;
+        PlayerTurnCardGameState.PlayerBettingTurnEnded -= OnPlayerBettingTurnEnded;
         EnemyTurnCardGameState.EnemyTurnBegan -= OnEnemyTurnBegan;
         EnemyTurnCardGameState.EnemyTurnEnded -= OnEnemyTurnEnded;
         WinState.WinStateStart -= OnWinStart;
@@ -47,11 +52,22 @@ public class CardGameUIController : MonoBehaviour
     private void Start()
     {
         //make sure text is disabled on start
+        _playerBettingPanel.gameObject.SetActive(false);
         _enemyBettingPanel.gameObject.SetActive(false);
         _victoryPanel.gameObject.SetActive(false);
         _lossPanel.gameObject.SetActive(false);
         _playerBattlePanel.gameObject.SetActive(false);
         _enemyBattlePanel.gameObject.SetActive(false);
+    }
+
+    void OnPlayerBettingTurnBegan()
+    {
+        _playerBettingPanel.gameObject.SetActive(true);
+    }
+
+    void OnPlayerBettingTurnEnded()
+    {
+        _playerBettingPanel.gameObject.SetActive(false);
     }
 
     void OnEnemyTurnBegan()

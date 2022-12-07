@@ -37,5 +37,6 @@ public class WinState : CardGameState
     private void OnConfirmPressed()
     {
         StateMachine.ChangeState<MainMenuState>();
+        StateMachine.Input.PlayClip2D();
     }
 }

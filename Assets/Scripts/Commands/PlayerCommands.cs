@@ -7,7 +7,6 @@ public class PlayerCommands : MonoBehaviour
     [SerializeField] BoardSpawner _boardSpawner = null;
 
     Camera _camera = null;
-    RaycastHit _hitInfo;
 
     CommandInvoker _commandInvoker = new CommandInvoker();
 
@@ -23,7 +22,7 @@ public class PlayerCommands : MonoBehaviour
         //Spawn Command
         if (Input.GetMouseButtonDown(0))
         {
-            GetNewMouseHit();
+            //GetNewMouseHit();
             SpawnPawn();
         }
         //Undo last command
@@ -33,6 +32,7 @@ public class PlayerCommands : MonoBehaviour
         }
     }
 
+    /*
     void GetNewMouseHit()
     {
         //spawn pawn at mouse position
@@ -43,13 +43,32 @@ public class PlayerCommands : MonoBehaviour
             Debug.Log("Ray hit: " + _hitInfo.transform.name);
         }
     }
+    */
 
     void SpawnPawn()
     {
         //create the command
-        ICommand spawnPawnCommand = new SpawnPawnCommand(_boardSpawner, _hitInfo.point);
+        ICommand spawnPawnCommand = new SpawnPawnCommand(_boardSpawner);
         //perform the command
         _commandInvoker.ExecuteCommand(spawnPawnCommand);
+    }
+
+    void SpawnPlayerQueen()
+    {
+        ICommand spawnPlayerQueen = new SpawnPlayerQueen(_boardSpawner);
+        _commandInvoker.ExecuteCommand(spawnPlayerQueen);
+    }
+
+    void SpawnEnemyPawn()
+    {
+        ICommand spawnEP = new SpawnEnemyPawn(_boardSpawner);
+        _commandInvoker.ExecuteCommand(spawnEP);
+    }
+
+    void SpawnEnemyQueen()
+    {
+        ICommand spawnEnemyQueen = new SpawnEnemyQueen(_boardSpawner);
+        _commandInvoker.ExecuteCommand(spawnEnemyQueen);
     }
 
     public void Undo()

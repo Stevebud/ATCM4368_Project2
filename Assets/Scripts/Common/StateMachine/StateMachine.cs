@@ -53,7 +53,7 @@ public abstract class StateMachine : MonoBehaviour
 
     private void Update()
     {
-        //simulate Update in STates with 'tick'
+        //simulate Update in States with 'tick'
         if(CurrentState != null && !InTransition)
         {
             CurrentState.Tick();

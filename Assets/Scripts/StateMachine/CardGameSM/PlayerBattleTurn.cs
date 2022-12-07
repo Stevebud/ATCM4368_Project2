@@ -18,13 +18,6 @@ public class PlayerBattleTurn : CardGameState
         StateMachine.Input.PressedConfirm += OnPressedConfirm;
     }
 
-    /*
-    public override void Tick()
-    {
-        
-    }
-    */
-
     public override void Exit()
     {
         Debug.Log("Player Battle Turn Exiting...");
@@ -39,17 +32,20 @@ public class PlayerBattleTurn : CardGameState
     {
         //change the enemy battle turn state
         StateMachine.ChangeState<EnemyBattleTurn>();
+        StateMachine.Input.PlayClip2D();
     }
 
     void OnPressedRight()
     {
         //Change to win state
         StateMachine.ChangeState<WinState>();
+        StateMachine.Input.PlayWinClip();
     }
 
     void OnPressedLeft()
     {
         //Change to lose state
         StateMachine.ChangeState<LoseState>();
+        StateMachine.Input.PlayLoseClip();
     }
 }

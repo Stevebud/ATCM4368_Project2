@@ -10,6 +10,10 @@ public class InputController : MonoBehaviour
     public event Action PressedLeft = delegate { };
     public event Action PressedRight = delegate { };
 
+    [SerializeField] AudioHelper audioHelper;
+    [SerializeField] AudioClip clip;
+    [SerializeField] AudioClip winClip;
+    [SerializeField] AudioClip loseClip;
     void Update()
     {
         DetectConfirm();
@@ -48,5 +52,20 @@ public class InputController : MonoBehaviour
         {
             PressedConfirm?.Invoke();
         }
+    }
+
+    public void PlayWinClip()
+    {
+        audioHelper.PlayAudioClip(winClip);
+    }
+
+    public void PlayLoseClip()
+    {
+        audioHelper.PlayAudioClip(loseClip);
+    }
+
+    public void PlayClip2D()
+    {
+        audioHelper.PlayAudioClip(clip);
     }
 }

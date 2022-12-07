@@ -12,11 +12,15 @@ public class PieceDisplayPanel : MonoBehaviour
     [SerializeField] Sprite _pawn = null;
     [SerializeField] Sprite _queen = null;
     [SerializeField] int _gridSize = 4;
+    [SerializeField] GameObject _selectionHighight = null;
 
     //private RectTransform _thisRectTransform;
     private int _pawnNum;
     private int _queenNum;
+    private bool _hasSelection;
+    
     [SerializeField] Image[,] images;
+    /*
     [SerializeField] Image A1;
     [SerializeField] Image A2;
     [SerializeField] Image A3;
@@ -33,6 +37,7 @@ public class PieceDisplayPanel : MonoBehaviour
     [SerializeField] Image D2;
     [SerializeField] Image D3;
     [SerializeField] Image D4;
+    */
 
     private void Start()
     {
@@ -40,22 +45,42 @@ public class PieceDisplayPanel : MonoBehaviour
         UpdateDisplay();
     }
 
-    public void Setup()
+    //public function that changes internal values
+    public void ChangeNumberDisplayed(int pawnChange, int queenChange)
+    {
+        _pawnNum += pawnChange;
+        _queenNum += queenChange;
+        UpdateDisplay();
+    }
+
+    private void Setup()
     {
         //_thisRectTransform = GetComponent<RectTransform>();
-        /*
+        
         images = new Image[_gridSize, _gridSize];
         for (int j = 0; j < _gridSize; j++)
         {
             for (int k = 0; k < _gridSize; k++)
             {
+                //make the image
                 images[j, k] = Instantiate(_emptyImage, transform);
+                //set the image
+                if (k < 2)
+                {
+                    images[j, k].sprite = _pawn;
+                }
+                else
+                {
+                    images[j, k].sprite = _queen;
+                }
                 //move into position
                 RectTransform _rectTransform = images[j, k].rectTransform;
-                _rectTransform.Translate(-100 + j * 50, -100 + k * 50, 0f, Space.Self);
+                _rectTransform.Translate(-78 + j * 50, -68 + k * 50, 0f, Space.Self);
+                images[j, k].gameObject.SetActive(false);
             }
         }
-        */
+
+        /*
         images = new Image[_gridSize, _gridSize];
         images[0, 0] = A1;
         images[1, 0] = A2;
@@ -73,9 +98,10 @@ public class PieceDisplayPanel : MonoBehaviour
         images[1, 3] = D2;
         images[2, 3] = D3;
         images[3, 3] = D4;
+        */
     }
 
-    public void UpdateDisplay()
+    private void UpdateDisplay()
     {
         if (_forPlayer)
         {
@@ -90,14 +116,35 @@ public class PieceDisplayPanel : MonoBehaviour
         }
 
         //update UI
-        for (int i = 0; i < _pawnNum; i++)
+        //pawns
+        for (int i = 0; i < _gridSize*3/2; i++)
         {
-            images[i % _gridSize, (i / 4) % 4].sprite = _pawn;
+            if (i < _pawnNum)
+            {
+                images[i % _gridSize, (i / _gridSize) % _gridSize].gameObject.SetActive(true);
+            }
+            else
+            {
+                images[i % _gridSize, (i / _gridSize) % _gridSize].gameObject.SetActive(false);
+            }
         }
-        for (int i = 0; i < _queenNum; i++)
+        //queens
+        for (int i = 0; i < _gridSize * 3 / 2; i++)
         {
-            images[(i % 4), 3+(i / 4) % 4].sprite = _queen;
+            if (i < _queenNum)
+            {
+                images[(i % 4), _gridSize/2 + (i / 4) % 4].gameObject.SetActive(true);
+            }
+            else
+            {
+                images[(i % 4), _gridSize/2 + (i / 4) % 4].gameObject.SetActive(false);
+            }
         }
     }
 
+    public void SetSelection(bool hasSelection)
+    {
+        _hasSelection = hasSelection;
+        _selectionHighight.SetActive(hasSelection);
+    }
 }
